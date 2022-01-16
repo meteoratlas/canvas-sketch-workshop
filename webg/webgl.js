@@ -8,6 +8,7 @@ const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
 const palettes = require("nice-color-palettes");
 const eases = require("eases");
+const bezierEasing = require("bezier-easing");
 
 const settings = {
   dimensions: [512, 512],
@@ -70,6 +71,8 @@ const sketch = ({ context }) => {
   light.position.set(0, 0, 4);
   scene.add(light);
 
+  const easeFunction = BezierEasing(0.67, 0.03, 0.29, 0.99);
+
   // draw each frame
   return {
     // Handle resize events here
@@ -102,9 +105,9 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ playhead }) {
-      // controls.update();
-      // mesh.rotation.y = time * 0.1;
-      scene.rotation.y = Math.sin(playhead * Math.PI * 2);
+      const t = Math.sin(playhead * Math.PI);
+
+      scene.rotation.y = easeFunction(t); // eases.expoInOut(t);
       renderer.render(scene, camera);
     },
     // Dispose of events & renderer for cleaner hot-reloading
