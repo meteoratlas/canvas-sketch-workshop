@@ -24,7 +24,7 @@ const frag = glsl(/* glsl */ `
     // vec3 colorB = vec3(0.0, 1.0, 0.0);
 
     vec2 centre = vUv - 0.5;
-    // centre.x *= aspect;
+    centre.x *= aspect;
     float dist = length(centre);
 
     float alpha = 1.0 - smoothstep(0.497, 0.5, dist);
